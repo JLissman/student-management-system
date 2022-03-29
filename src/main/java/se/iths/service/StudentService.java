@@ -44,14 +44,14 @@ public class StudentService {
         return entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
 
     }
-    public List<Student> queryDB(String field, String value) {
+    public List<Student> queryDB(String name) {
 
-        TypedQuery<Student> query = entityManager.createQuery("SELECT s FROM Student s WHERE :field = :number", Student.class);
-        List<Student> result = query.setParameter("field", "s."+field).setParameter("number", value).getResultList();
-        if(result.size()>0){
+        String query = ("SELECT s FROM Student s WHERE s.lastName = :name");
+        List<Student> result = entityManager.createQuery(query).setParameter("name", name).getResultList();//
+        if(result.size()!=0){
         return result;}
         else{
-        return entityManager.createQuery("SELECT s FROM Student s WHERE s."+field +" = '"+value+"'", Student.class).getResultList();
+        return null;//entityManager.createQuery("SELECT s FROM Student s WHERE s."+field +" = '"+value+"'", Student.class).getResultList();
         }
 
     }

@@ -1,7 +1,7 @@
 package se.iths.rest;
 
 
-import se.iths.CustomExceptions.TableNotFoundException;
+import se.iths.CustomExceptions.LastNameNotFoundException;
 import se.iths.CustomExceptions.StudentUpdateException;
 import se.iths.entity.Student;
 import se.iths.service.StudentService;
@@ -37,12 +37,13 @@ public class StudentRest {
     //query
     @GET
     @Path("query")
-    public Response queryDatabase(@QueryParam("column") String column, @QueryParam("value") String value) throws TableNotFoundException {
-        List<Student> foundStudents = studentService.queryDB(column,value);
+    public Response queryDatabase(@QueryParam("name") String name) throws LastNameNotFoundException {
+        List<Student> foundStudents = studentService.queryDB(name);
+        System.out.println(foundStudents);
         if(foundStudents!=null) {
             return Response.ok(foundStudents).build();
         }else{
-            throw new TableNotFoundException(column);
+            throw new LastNameNotFoundException(name);
         }
     }
     //extra för debugging

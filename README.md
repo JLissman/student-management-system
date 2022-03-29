@@ -25,9 +25,9 @@ payload example:<br>
 
 <b>Query Database</b><br>
 GET REQUEST<br>
-http://127.0.0.1:8080/student-management-system/api/v1/students/query?column=firstName&value=Bosse
+http://127.0.0.1:8080/student-management-system/api/v1/students/query?name=Andersson
 
-queries database based on column & value (e.g can query for first name by adding firstName to column or lastName for lastname queries)
+queries database based on lastname
 
 <b>Update student</b><br>
 PUT REQUEST<br>
