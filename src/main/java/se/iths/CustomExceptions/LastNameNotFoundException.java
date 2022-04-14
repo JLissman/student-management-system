@@ -1,7 +1,9 @@
 package se.iths.CustomExceptions;
 
 
-public class LastNameNotFoundException extends Exception {
+import javax.ws.rs.WebApplicationException;
+
+public class LastNameNotFoundException extends WebApplicationException {
     public LastNameNotFoundException(String column){
         super("last name:"+column+", was not found in database");
     }

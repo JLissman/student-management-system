@@ -1,36 +1,63 @@
 package se.iths.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "student_id", sequenceName = "seq_id")
+    @GeneratedValue(generator = "student_id")
     private Long id;
+
+    @Size(min=2)
     private String firstName;
+
+    @Size(min=2)
     private String lastName;
+
     private String email;
     private String phoneNumber;
 
-    public Student(){}
+    @ManyToMany
+    @JsonbTransient
+    private List<Subject> subjects;
 
-    public Student(String firstName, String lastName, String email, String phoneNumber) {
+    public Student(String firstName, String lastName, String email, String phoneNumber, List<Subject> subjects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.subjects = subjects;
     }
 
-    public Student(String firstName, String lastName, String email) {
+    public Student(String firstName, String lastName, String email,List<Subject> subjects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = null;
+        this.subjects = subjects;
     }
 
+    public Student() {
+
+    }
+
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public void addSubject(Subject subject){
+        subjects.add(subject);
+        subject.addStudent(this);
+    }
     public Long getId() {
         return id;
     }
@@ -70,4 +97,6 @@ public class Student {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+
 }
